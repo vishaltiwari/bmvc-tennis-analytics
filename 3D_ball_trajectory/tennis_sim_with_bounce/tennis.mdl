@@ -1,0 +1,860 @@
+Model {
+  Name			  "tp235580"
+  Version		  3.0
+  SampleTimeColors	  off
+  ShowPortDataTypes	  off
+  BlockParametersDataTip  off
+  BlockDescriptionStringDataTip	off
+  ToolBar		  on
+  StatusBar		  on
+  BrowserShowLibraryLinks off
+  BrowserLookUnderMasks	  off
+  Created		  "Sun Nov 16 15:22:24 2003"
+  UpdateHistory		  "UpdateHistoryNever"
+  ModifiedByFormat	  "%<Auto>"
+  LastModifiedBy	  "campa"
+  ModifiedDateFormat	  "%<Auto>"
+  LastModifiedDate	  "Sun Dec 14 23:23:57 2003"
+  ModelVersionFormat	  "1.%<AutoIncrement:67>"
+  ConfigurationManager	  "None"
+  SimParamPage		  "Solver"
+  ExtModeMexFile	  "ext_comm"
+  ExtModeBatchMode	  off
+  ExtModeTrigType	  "manual"
+  ExtModeTrigMode	  "normal"
+  ExtModeTrigPort	  "1"
+  ExtModeTrigElement	  "any"
+  ExtModeTrigDuration	  1000
+  ExtModeTrigHoldOff	  0
+  ExtModeTrigDelay	  0
+  ExtModeTrigDirection	  "rising"
+  ExtModeTrigLevel	  0
+  ExtModeArchiveMode	  "off"
+  ExtModeAutoIncOneShot	  off
+  ExtModeIncDirWhenArm	  off
+  ExtModeAddSuffixToVar	  off
+  ExtModeWriteAllDataToWs off
+  ExtModeArmWhenConnect	  on
+  BufferReuse		  on
+  SimulationMode	  "normal"
+  Solver		  "ode45"
+  SolverMode		  "Auto"
+  StartTime		  "0.0"
+  StopTime		  "10.0"
+  MaxOrder		  5
+  MaxStep		  "1e-3"
+  InitialStep		  "auto"
+  FixedStep		  "auto"
+  RelTol		  "1e-6"
+  AbsTol		  "1e-6"
+  OutputOption		  "RefineOutputTimes"
+  OutputTimes		  "[]"
+  Refine		  "1"
+  LoadExternalInput	  off
+  ExternalInput		  "[t, u]"
+  LoadInitialState	  off
+  InitialState		  "xInitial"
+  SaveTime		  on
+  TimeSaveName		  "tout"
+  SaveState		  off
+  StateSaveName		  "xout"
+  SaveOutput		  on
+  OutputSaveName	  "yout"
+  SaveFinalState	  off
+  FinalStateName	  "xFinal"
+  SaveFormat		  "Matrix"
+  Decimation		  "1"
+  AlgebraicLoopMsg	  "warning"
+  InheritedTsInSrcMsg	  "warning"
+  IntegerOverflowMsg	  "warning"
+  Int32ToFloatConvMsg	  "warning"
+  UnnecessaryDatatypeConvMsg "none"
+  SignalLabelMismatchMsg  "none"
+  UnconnectedInputMsg	  "warning"
+  UnconnectedOutputMsg	  "warning"
+  UnconnectedLineMsg	  "warning"
+  RTWInlineParameters	  off
+  BooleanDataType	  on
+  OptimizeBlockIOStorage  on
+  ZeroCross		  on
+  RTWSystemTargetFile	  "grt.tlc"
+  RTWTemplateMakefile	  "grt_default_tmf"
+  RTWMakeCommand	  "make_rtw"
+  RTWGenerateCodeOnly	  off
+  RTWRetainRTWFile	  off
+  BlockDefaults {
+    Orientation		    "right"
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    NamePlacement	    "normal"
+    FontName		    "Helvetica"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+    ShowName		    on
+  }
+  AnnotationDefaults {
+    HorizontalAlignment	    "center"
+    VerticalAlignment	    "middle"
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    FontName		    "Helvetica"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+  }
+  LineDefaults {
+    FontName		    "Helvetica"
+    FontSize		    9
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+  }
+  System {
+    Name		    "tp235580"
+    Location		    [356, 106, 1019, 344]
+    Open		    off
+    ModelBrowserVisibility  off
+    ModelBrowserWidth	    200
+    ScreenColor		    "white"
+    PaperOrientation	    "landscape"
+    PaperPositionMode	    "auto"
+    PaperType		    "usletter"
+    PaperUnits		    "inches"
+    ZoomFactor		    "100"
+    ReportName		    "simulink-default.rpt"
+    Block {
+      BlockType		      Gain
+      Name		      "1/m"
+      Position		      [180, 75, 210, 105]
+      Gain		      "1/57.6e-3"
+      SaturateOnIntegerOverflow	on
+    }
+    Block {
+      BlockType		      SubSystem
+      Name		      "Aerodynamics"
+      Ports		      [2, 1, 0, 0, 0]
+      Position		      [235, 130, 295, 170]
+      Orientation	      "left"
+      ShowPortLabels	      on
+      MaskType		      "Ball Aerodynamics"
+      MaskDescription	      "   Computes aerodynamic forces on the tennis ba"
+"ll \n   from linear and angular velocity. Ball characteristics \n   and air d"
+"ensity are taken as mask parameters. "
+      MaskHelp		      "   Computes aerodynamic forces on the tennis ba"
+"ll \n   from linear and angular velocity. Ball characteristics \n   and air d"
+"ensity are taken as mask parameters. "
+      MaskPromptString	      "Ball Radius (m)|Ball Drag Coefficient|Ball Lift"
+" Coefficient|Air Density (Kg/m^3)"
+      MaskStyleString	      "edit,edit,edit,edit"
+      MaskTunableValueString  "on,on,on,on"
+      MaskCallbackString      "|||"
+      MaskEnableString	      "on,on,on,on"
+      MaskVisibilityString    "on,on,on,on"
+      MaskVariables	      "R=@1;CD=@2;CL=@3;rho=@4;"
+      MaskIconFrame	      on
+      MaskIconOpaque	      on
+      MaskIconRotate	      "none"
+      MaskIconUnits	      "autoscale"
+      MaskValueString	      "32.5e-3|0.48|0.017|1.229"
+      System {
+	Name			"Aerodynamics"
+	Location		[355, 445, 1155, 661]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "vel"
+	  Position		  [690, 118, 720, 132]
+	  Orientation		  "left"
+	  Port			  "1"
+	  PortWidth	  "-1"
+	  SampleTime		  "-1"
+	  DataType		  "auto"
+	  SignalType		  "auto"
+	  Interpolate		  on
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "w"
+	  Position		  [690, 33, 720, 47]
+	  Orientation		  "left"
+	  NamePlacement		  "alternate"
+	  Port			  "2"
+	  PortWidth	  "-1"
+	  SampleTime		  "-1"
+	  DataType		  "auto"
+	  SignalType		  "auto"
+	  Interpolate		  on
+	}
+	Block {
+	  BlockType		  Gain
+	  Name			  "1/2*rho*S"
+	  Position		  [260, 35, 290, 65]
+	  Orientation		  "left"
+	  Gain			  "(1/2)*rho*(pi*R^2)"
+	  SaturateOnIntegerOverflow on
+	}
+	Block {
+	  BlockType		  Fcn
+	  Name			  "1/2*rho*S*V^2"
+	  Position		  [335, 85, 505, 115]
+	  Orientation		  "left"
+	  NamePlacement		  "alternate"
+	  Expr			  "(1/2)*rho*(pi*R^2)*u(1)*u(1)"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Cartesian to\nSpherical"
+	  Ports			  [3, 3, 0, 0, 0]
+	  Position		  [540, 106, 595, 144]
+	  Orientation		  "left"
+	  SourceBlock		  "simulink_extras/Transformations/Cartesian t"
+"o\nSpherical"
+	  SourceType		  "Cart2Sph"
+	}
+	Block {
+	  BlockType		  Demux
+	  Name			  "Demux"
+	  Ports			  [1, 3, 0, 0, 0]
+	  Position		  [640, 106, 645, 144]
+	  Orientation		  "left"
+	  BackgroundColor	  "black"
+	  ShowName		  off
+	  Outputs		  "3"
+	}
+	Block {
+	  BlockType		  Gain
+	  Name			  "Drag"
+	  Position		  [145, 110, 175, 140]
+	  Orientation		  "left"
+	  Gain			  "CD"
+	  SaturateOnIntegerOverflow on
+	}
+	Block {
+	  BlockType		  Gain
+	  Name			  "Lift (Magnus)"
+	  Position		  [145, 35, 175, 65]
+	  Orientation		  "left"
+	  Gain			  "CL"
+	  SaturateOnIntegerOverflow on
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux"
+	  Ports			  [3, 1, 0, 0, 0]
+	  Position		  [205, 106, 210, 144]
+	  Orientation		  "left"
+	  ShowName		  off
+	  Inputs		  "3"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Spherical to\nCartesian"
+	  Ports			  [3, 3, 0, 0, 0]
+	  Position		  [235, 108, 290, 142]
+	  Orientation		  "left"
+	  SourceBlock		  "simulink_extras/Transformations/Spherical t"
+"o\nCartesian"
+	  SourceType		  "Sph2Cart"
+	}
+	Block {
+	  BlockType		  Sum
+	  Name			  "Sum"
+	  Ports			  [2, 1, 0, 0, 0]
+	  Position		  [100, 115, 120, 135]
+	  Orientation		  "left"
+	  ShowName		  off
+	  IconShape		  "round"
+	  Inputs		  "+-|"
+	  SaturateOnIntegerOverflow on
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "Vb x w1"
+	  Ports			  [2, 1, 0, 0, 0]
+	  Position		  [545, 30, 590, 65]
+	  Orientation		  "left"
+	  ShowName		  off
+	  ShowPortLabels	  off
+	  MaskType		  "Cross Product"
+	  MaskDescription	  "Calculates the cross product of two 3x1 vec"
+"tors."
+	  MaskHelp		  "<p>This block calculates the cross product "
+"of two 3x1 vectors, ie.</p>\n\n<ul>C(1) = A(2)*B(3) - A(3)*B(2)</ul>\n<ul>C(2"
+") = A(3)*B(1) - A(1)*B(3)</ul>\n<ul>C(3) = A(1)*B(2) - A(2)*B(1)</ul>\n\n<p>T"
+"he block inputs and output contain more than one signal as described below.</"
+"p>\n\n<p><H4>Block Vector Input 1 - A</H4>\n<ul>\n<li>A(1)</li>\n<li>A(2)</li"
+">\n<li>A(3)</li>\n</ul>\n</p>\n\n<p><H4>Block Vector Input 2 - B</H4>\n<ul>\n"
+"<li>B(1)</li>\n<li>B(2)</li>\n<li>B(3)</li>\n</ul>\n</p>\n\n<p><H4>Block Vect"
+"or Output - Cross Product (AxB)</H4> \n<ul>\n<li>C(1)</li>\n<li>C(2)</li>\n<l"
+"i>C(3)</li>\n</ul>\n</p>\n"
+	  MaskDisplay		  "disp('Cross\\nProduct')"
+	  MaskIconFrame		  on
+	  MaskIconOpaque	  on
+	  MaskIconRotate	  "none"
+	  MaskIconUnits		  "autoscale"
+	  System {
+	    Name		    "Vb x w1"
+	    Location		    [571, 132, 925, 533]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "a(1)\na(2)\na(3)"
+	      Position		      [40, 70, 60, 90]
+	      Port		      "1"
+	      PortWidth	      "-1"
+	      SampleTime	      "-1"
+	      DataType		      "auto"
+	      SignalType	      "auto"
+	      Interpolate	      on
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "b(1)\nb(2)\nb(3)"
+	      Position		      [45, 230, 65, 250]
+	      Port		      "2"
+	      PortWidth	      "-1"
+	      SampleTime	      "-1"
+	      DataType		      "auto"
+	      SignalType	      "auto"
+	      Interpolate	      on
+	    }
+	    Block {
+	      BlockType		      Product
+	      Name		      "Product"
+	      Ports		      [2, 1, 0, 0, 0]
+	      Position		      [195, 72, 225, 103]
+	      ShowName		      off
+	      Inputs		      "2"
+	      SaturateOnIntegerOverflow	on
+	    }
+	    Block {
+	      BlockType		      Product
+	      Name		      "Product1"
+	      Ports		      [2, 1, 0, 0, 0]
+	      Position		      [200, 302, 230, 333]
+	      ShowName		      off
+	      Inputs		      "2"
+	      SaturateOnIntegerOverflow	on
+	    }
+	    Block {
+	      BlockType		      Selector
+	      Name		      "Selector"
+	      Ports		      [1, 1, 0, 0, 0]
+	      Position		      [115, 44, 135, 116]
+	      ShowName		      off
+	      Elements		      "[2 3 1]"
+	      InputPortWidth	      "3"
+	    }
+	    Block {
+	      BlockType		      Selector
+	      Name		      "Selector1"
+	      Ports		      [1, 1, 0, 0, 0]
+	      Position		      [115, 202, 135, 278]
+	      ShowName		      off
+	      Elements		      "[3 1 2]"
+	      InputPortWidth	      "3"
+	    }
+	    Block {
+	      BlockType		      Selector
+	      Name		      "Selector2"
+	      Ports		      [1, 1, 0, 0, 0]
+	      Position		      [115, 284, 135, 366]
+	      ShowName		      off
+	      Elements		      "[2 3 1]"
+	      InputPortWidth	      "3"
+	    }
+	    Block {
+	      BlockType		      Selector
+	      Name		      "Selector3"
+	      Ports		      [1, 1, 0, 0, 0]
+	      Position		      [115, 123, 135, 197]
+	      ShowName		      off
+	      Elements		      "[3 1 2]"
+	      InputPortWidth	      "3"
+	    }
+	    Block {
+	      BlockType		      Sum
+	      Name		      "Sum"
+	      Ports		      [2, 1, 0, 0, 0]
+	      Position		      [230, 170, 270, 210]
+	      ShowName		      off
+	      IconShape		      "round"
+	      Inputs		      "+|-"
+	      SaturateOnIntegerOverflow	on
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "c(1)\nc(2)\nc(3)"
+	      Position		      [300, 180, 320, 200]
+	      Port		      "1"
+	      OutputWhenDisabled      "held"
+	      InitialOutput	      "0"
+	    }
+	    Line {
+	      SrcBlock		      "Sum"
+	      SrcPort		      1
+	      DstBlock		      "c(1)\nc(2)\nc(3)"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "b(1)\nb(2)\nb(3)"
+	      SrcPort		      1
+	      Points		      [10, 0]
+	      Branch {
+		DstBlock		"Selector1"
+		DstPort			1
+	      }
+	      Branch {
+		Points			[0, 85]
+		DstBlock		"Selector2"
+		DstPort			1
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "Selector"
+	      SrcPort		      1
+	      DstBlock		      "Product"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "a(1)\na(2)\na(3)"
+	      SrcPort		      1
+	      Points		      [15, 0]
+	      Branch {
+		DstBlock		"Selector"
+		DstPort			1
+	      }
+	      Branch {
+		Points			[0, 80]
+		DstBlock		"Selector3"
+		DstPort			1
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "Product"
+	      SrcPort		      1
+	      Points		      [20, 0]
+	      DstBlock		      "Sum"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Selector1"
+	      SrcPort		      1
+	      Points		      [10, 0]
+	      DstBlock		      "Product"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Product1"
+	      SrcPort		      1
+	      Points		      [15, 0]
+	      DstBlock		      "Sum"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Selector2"
+	      SrcPort		      1
+	      DstBlock		      "Product1"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Selector3"
+	      SrcPort		      1
+	      Points		      [10, 0; 25, 150]
+	      DstBlock		      "Product1"
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "F"
+	  Position		  [45, 118, 75, 132]
+	  Orientation		  "left"
+	  Port			  "1"
+	  OutputWhenDisabled	  "held"
+	  InitialOutput		  "[]"
+	}
+	Line {
+	  SrcBlock		  "Demux"
+	  SrcPort		  1
+	  DstBlock		  "Cartesian to\nSpherical"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Demux"
+	  SrcPort		  2
+	  DstBlock		  "Cartesian to\nSpherical"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Demux"
+	  SrcPort		  3
+	  DstBlock		  "Cartesian to\nSpherical"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "vel"
+	  SrcPort		  1
+	  Points		  [-15, 0]
+	  Branch {
+	    DstBlock		    "Demux"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, -70]
+	    DstBlock		    "Vb x w1"
+	    DstPort		    2
+	  }
+	}
+	Line {
+	  SrcBlock		  "Cartesian to\nSpherical"
+	  SrcPort		  1
+	  Points		  [-15, 0]
+	  DstBlock		  "1/2*rho*S*V^2"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "1/2*rho*S*V^2"
+	  SrcPort		  1
+	  Points		  [-5, 0; 0, 15]
+	  DstBlock		  "Spherical to\nCartesian"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Spherical to\nCartesian"
+	  SrcPort		  1
+	  DstBlock		  "Mux"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Spherical to\nCartesian"
+	  SrcPort		  2
+	  DstBlock		  "Mux"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Spherical to\nCartesian"
+	  SrcPort		  3
+	  DstBlock		  "Mux"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "Mux"
+	  SrcPort		  1
+	  DstBlock		  "Drag"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Cartesian to\nSpherical"
+	  SrcPort		  2
+	  DstBlock		  "Spherical to\nCartesian"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Cartesian to\nSpherical"
+	  SrcPort		  3
+	  DstBlock		  "Spherical to\nCartesian"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "Vb x w1"
+	  SrcPort		  1
+	  DstBlock		  "1/2*rho*S"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Sum"
+	  SrcPort		  1
+	  DstBlock		  "F"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "1/2*rho*S"
+	  SrcPort		  1
+	  DstBlock		  "Lift (Magnus)"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "w"
+	  SrcPort		  1
+	  DstBlock		  "Vb x w1"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Drag"
+	  SrcPort		  1
+	  DstBlock		  "Sum"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Lift (Magnus)"
+	  SrcPort		  1
+	  Points		  [-30, 0]
+	  DstBlock		  "Sum"
+	  DstPort		  1
+	}
+      }
+    }
+    Block {
+      BlockType		      Clock
+      Name		      "Clock"
+      Position		      [475, 35, 495, 55]
+      DisplayTime	      off
+      Decimation	      "10"
+    }
+    Block {
+      BlockType		      HitCross
+      Name		      "Hit \nCrossing"
+      Ports		      [1, 1, 0, 0, 0]
+      Position		      [515, 106, 535, 134]
+      ShowName		      off
+      HitCrossingOffset	      "0"
+      HitCrossingDirection    "either"
+      ShowOutputPort	      on
+    }
+    Block {
+      BlockType		      HitCross
+      Name		      "Hit \nCrossing1"
+      Ports		      [1, 0, 0, 0, 0]
+      Position		      [560, 141, 580, 169]
+      ShowName		      off
+      HitCrossingOffset	      "23.7744/2"
+      HitCrossingDirection    "either"
+      ShowOutputPort	      off
+    }
+    Block {
+      BlockType		      Integrator
+      Name		      "Integrator_p"
+      Ports		      [1, 1, 0, 0, 0]
+      Position		      [370, 75, 400, 105]
+      ExternalReset	      "none"
+      InitialConditionSource  "internal"
+      InitialCondition	      "p0"
+      LimitOutput	      off
+      UpperSaturationLimit    "inf"
+      LowerSaturationLimit    "-inf"
+      ShowSaturationPort      off
+      ShowStatePort	      off
+      AbsoluteTolerance	      "auto"
+    }
+    Block {
+      BlockType		      Integrator
+      Name		      "Integrator_v"
+      Ports		      [1, 1, 0, 0, 0]
+      Position		      [265, 75, 295, 105]
+      ExternalReset	      "none"
+      InitialConditionSource  "internal"
+      InitialCondition	      "v0"
+      LimitOutput	      off
+      UpperSaturationLimit    "inf"
+      LowerSaturationLimit    "-inf"
+      ShowSaturationPort      off
+      ShowStatePort	      off
+      AbsoluteTolerance	      "auto"
+    }
+    Block {
+      BlockType		      Selector
+      Name		      "Selector"
+      Ports		      [1, 1, 0, 0, 0]
+      Position		      [475, 106, 495, 134]
+      ShowName		      off
+      Elements		      "3"
+      InputPortWidth	      "3"
+    }
+    Block {
+      BlockType		      Selector
+      Name		      "Selector1"
+      Ports		      [1, 1, 0, 0, 0]
+      Position		      [475, 141, 495, 169]
+      ShowName		      off
+      Elements		      "1"
+      InputPortWidth	      "3"
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "Spin"
+      Position		      [345, 151, 400, 169]
+      Orientation	      "left"
+      Value		      "w0"
+    }
+    Block {
+      BlockType		      Stop
+      Name		      "Stop Simulation"
+      Position		      [550, 103, 585, 137]
+      ShowName		      off
+    }
+    Block {
+      BlockType		      Sum
+      Name		      "Sum"
+      Ports		      [2, 1, 0, 0, 0]
+      Position		      [120, 80, 140, 100]
+      ShowName		      off
+      IconShape		      "round"
+      Inputs		      "|++"
+      SaturateOnIntegerOverflow	on
+    }
+    Block {
+      BlockType		      ToWorkspace
+      Name		      "To Workspace"
+      Position		      [475, 80, 495, 100]
+      ShowName		      off
+      VariableName	      "p"
+      Decimation	      "1"
+      SampleTime	      "-1"
+      SaveFormat	      "Matrix"
+    }
+    Block {
+      BlockType		      ToWorkspace
+      Name		      "To Workspace1"
+      Position		      [565, 35, 585, 55]
+      ShowName		      off
+      VariableName	      "t"
+      Decimation	      "1"
+      SampleTime	      "-1"
+      SaveFormat	      "Matrix"
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "m*g"
+      Position		      [60, 75, 90, 105]
+      Value		      "57.6e-3*[0 0 -9.8]"
+    }
+    Block {
+      BlockType		      Gain
+      Name		      "m2mm"
+      Position		      [515, 140, 540, 170]
+      Gain		      "1e3"
+      SaturateOnIntegerOverflow	on
+    }
+    Line {
+      Name		      "pos"
+      Labels		      [0, 1]
+      SrcBlock		      "Integrator_p"
+      SrcPort		      1
+      Points		      [0, 0; 35, 0]
+      Branch {
+	DstBlock		"To Workspace"
+	DstPort			1
+      }
+      Branch {
+	Points			[0, 30]
+	Branch {
+	  DstBlock		  "Selector"
+	  DstPort		  1
+	}
+	Branch {
+	  Points		  [0, 35]
+	  DstBlock		  "Selector1"
+	  DstPort		  1
+	}
+      }
+    }
+    Line {
+      Name		      "vel"
+      Labels		      [2, 0]
+      SrcBlock		      "Integrator_v"
+      SrcPort		      1
+      Points		      [0, 0; 30, 0]
+      Branch {
+	DstBlock		"Integrator_p"
+	DstPort			1
+      }
+      Branch {
+	Points			[0, 50]
+	DstBlock		"Aerodynamics"
+	DstPort			1
+      }
+    }
+    Line {
+      Name		      "f"
+      Labels		      [0, 1]
+      SrcBlock		      "Sum"
+      SrcPort		      1
+      DstBlock		      "1/m"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Aerodynamics"
+      SrcPort		      1
+      Points		      [-100, 0]
+      DstBlock		      "Sum"
+      DstPort		      2
+    }
+    Line {
+      SrcBlock		      "m*g"
+      SrcPort		      1
+      DstBlock		      "Sum"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Clock"
+      SrcPort		      1
+      DstBlock		      "To Workspace1"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Hit \nCrossing"
+      SrcPort		      1
+      DstBlock		      "Stop Simulation"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Selector"
+      SrcPort		      1
+      DstBlock		      "Hit \nCrossing"
+      DstPort		      1
+    }
+    Line {
+      Name		      "acc"
+      Labels		      [0, 1]
+      SrcBlock		      "1/m"
+      SrcPort		      1
+      DstBlock		      "Integrator_v"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Spin"
+      SrcPort		      1
+      DstBlock		      "Aerodynamics"
+      DstPort		      2
+    }
+    Line {
+      SrcBlock		      "Selector1"
+      SrcPort		      1
+      DstBlock		      "m2mm"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "m2mm"
+      SrcPort		      1
+      DstBlock		      "Hit \nCrossing1"
+      DstPort		      1
+    }
+    Annotation {
+      Text		      "tnsstroke([0 0 0.9906],[25.03424 9*pi/180 0],-1"
+"6,1);"
+      Position		      [180, 44]
+      ForegroundColor	      "blue"
+    }
+  }
+}
