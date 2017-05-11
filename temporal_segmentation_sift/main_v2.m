@@ -4,9 +4,9 @@ run('../../vlfeat-0.9.20/toolbox/vl_setup');
 %% Input, output, template parameters
 filename = 'Federer-vs-Nadal-AO2017';
 %filename = 'test_sample4';
-video_in = ['test_data/' , filename , '.mp4'];
-video_write_prefix = ['/media/vishal/0804E66104E6516C/Racket_games/temporal_segments/' , filename];
-%video_write_prefix = ['temporal_segments/' , filename];
+video_in = ['sample_data/' , filename , '.mp4'];
+%video_write_prefix = ['/media/vishal/0804E66104E6516C/Racket_games/temporal_segments/' , filename];
+video_write_prefix = ['/Neutron9/anurag/AO_2017_segments/' , filename];
 template_in = 'court_template/template_new.png';
 mkdir(video_write_prefix);
 
@@ -35,8 +35,10 @@ curr_seq_frames = {};
 end_frame_nb = 0;
 
 count = 1;
-video_write = [video_write_prefix , '/' , num2str(count) , '.avi'];
-vidOut = VideoWriter(video_write , 'Motion JPEG AVI');
+video_write_avi = [video_write_prefix , '/' , num2str(count) , '.avi'];
+video_write_mp4 = [video_write_prefix , '/' , num2str(count) , '.mp4'];
+vidOut = VideoWriter(video_write_avi , 'Motion JPEG AVI');
+%vidOut = VideoWriter(video_write , 'MPEG-4');
 open(vidOut);
 c = 0;
 while hasFrame(vidObj)
@@ -64,9 +66,15 @@ while hasFrame(vidObj)
                 count = count + 1;
                 %release(videoFWriter);
                 close(vidOut);
-                video_write = [video_write_prefix , '/' , num2str(count) , '.avi'];
+                exe_str = ['ffmpeg -i ' ,video_write_avi, ' -c:v libx264 -crf 19 -preset slow -c:a libfdk_aac -b:a 192k -ac 2 ' , video_write_mp4]';
+                system(exe_str');
+                rem_avi = ['rm -rf ' , video_write_avi];
+                system(rem_avi);
+                video_write_avi = [video_write_prefix , '/' , num2str(count) , '.avi'];
+                video_write_mp4 = [video_write_prefix , '/' , num2str(count) , '.mp4'];
                 %videoFWriter = vision.VideoFileWriter(video_write);
-                vidOut = VideoWriter(video_write,'Motion JPEG AVI');
+                vidOut = VideoWriter(video_write_avi,'Motion JPEG AVI');
+                %vidOut = VideoWriter(video_write_avi , 'MPEG-4');
                 open(vidOut);
                 seq_to_write = 0;
                 found_court_len = 0;
@@ -90,8 +98,9 @@ while hasFrame(vidObj)
         not_found_court = 0;
         found_court_len = found_court_len + 1;
         %step(videoFWriter , curr_image);
-        im_to_write = imresize(curr_image_orig,0.6);
-        curr_seq_frames{found_court_len} = im_to_write;
+        %im_to_write = imresize(curr_image_orig,0.6);
+        %curr_seq_frames{found_court_len} = im_to_write;
+        curr_seq_frames{found_court_len} = curr_image_orig;
         %writeVideo(vidOut,curr_image_orig);
     end
     

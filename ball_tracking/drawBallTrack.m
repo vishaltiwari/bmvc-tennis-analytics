@@ -1,7 +1,7 @@
 function [] = drawBallTrack(graph,node_set,mov,best_paths)
 
     sparse_graph = sparse(graph);
-    imshow(mov(10).cdata);
+    figure ; imshow(mov(10).cdata);
     hold on;
     %[dist1 , path1 , pred1] = graphshortestpath(sparse_graph,1476,2099); % Path1
     

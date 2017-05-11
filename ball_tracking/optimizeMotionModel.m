@@ -1,10 +1,15 @@
-function optimizedModelsList = optimizeMotionModel(model_lst,candidate_per_frame,k_start,k_end , m_th , d_th)
+function optimizedModelsList = optimizeMotionModel(model_lst,candidate_per_frame,k_start,k_end , m_th , d_th , frame_img, vidOutObj , buffer_len, writeFlag)
     optimizedModelsList = [];
     %m_th = 4; % Added a new filtering parameter.
     %d_th = 5; % defined in the paper, changed from 3 -> 5
     dth_sq = d_th ^ 2;
     for i=1:size(model_lst,2)
+        
         model = model_lst(i);
+        if writeFlag == 1
+            frame_img = visualizeTracklet(frame_img, model,candidate_per_frame,k_start,k_end);
+            writeVideo(vidOutObj , frame_img);
+        end
         % move in the frame direction, k_min and k_max;
         % This starts of with the seed pixels
         k_min = model.p1.k;
@@ -41,7 +46,7 @@ function optimizedModelsList = optimizeMotionModel(model_lst,candidate_per_frame
                         support_set = [tmp_k_min_point support_set];
                     end
                 end
-                k = k -1;
+                k = k - 1;
             end
             
             tmp_k_max_point = model.p3;
@@ -117,6 +122,10 @@ function optimizedModelsList = optimizeMotionModel(model_lst,candidate_per_frame
             % Update the model, with p1= k_min, p2=k_mid, p3 = k_max
             %model.updateModel(tmp_k_min_point , k_mid , tmp_k_max_point);
             model = model_new;
+            if writeFlag == 1
+                frame_img = visualizeTracklet(frame_img, model,candidate_per_frame, k_start,k_end);
+                writeVideo(vidOutObj , frame_img);
+            end
             %visualizeTracklet(model,k_start,k_end,1);
             %scatter([model.p1.x ; model.p2.x ; model.p3.x] , [model.p1.y ; model.p2.y ; model.p3.y],100,'d');
         end

@@ -1,10 +1,15 @@
-function [node_set] = CreateTracklet (candidate_per_frame,mov,len,buffer_len,video_out , N , R, m_th , d_th)
+function [node_set] = CreateTracklet (candidate_per_frame,mov,len,buffer_len,video_out , N , R, m_th , d_th , writeFlag)
 %plot the candidate over time.
 
 %video_out = './TRGMCOutputVideo/ov_wim_sample2.avi_TrackLets.avi';
 
 vidOutObj = VideoWriter(video_out);
 open(vidOutObj);
+
+% Write the tracklet_formation
+vidOutObjTracklet = VideoWriter('tracklet_formation.avi');
+open(vidOutObjTracklet);
+
 
 if isempty(candidate_per_frame)
     return;
@@ -21,11 +26,12 @@ model_set = [];
 total_models = 0;
 node_set = [];
 
-img_ptr_mov = buffer_len + 1; % the position in the mov structure.
+img_ptr_mov = buffer_len + 1; % The position in the mov structure.
 tracklet_count = 0;
-for k_curr=ceil(ahead_ptr/2):size(candidate_per_frame,2)-1
+total_frames = size(candidate_per_frame,2);
+for k_curr=N+1:total_frames-1
     
-    if ahead_ptr >size(candidate_per_frame,2)
+    if ahead_ptr > total_frames
         break;
     end
     
@@ -87,17 +93,7 @@ for k_curr=ceil(ahead_ptr/2):size(candidate_per_frame,2)-1
     % Get the coordinates in prev,
     [prev_cand_indx , prev_cand_D] = knnsearch(prevKdTree , curr_coords , 'K' , 1);
     [next_cand_indx , next_cand_D] = knnsearch(nextKdTree , curr_coords , 'K' , 1);
-    
-    %% Plot to see 
-    %Plot the current frame candidate, along with nearest neighours in one past
-    %and future frames.
-%     nn_prev = one_prev_coords(prev_cand_indx,:);
-%     nn_next = one_next_coords(next_cand_indx,:);
-%     figure;
-%     scatter(curr_coords(:,1) , curr_coords(:,2),'X');
-%     hold on ; scatter(nn_prev(:,1) , nn_prev(:,2),'o');
-%     hold on ; scatter(nn_next(:,1) , nn_next(:,2),'+');
-    
+        
     %% Filter by R, and get seed pixels
     
     %Get the seeds, and the initial models
@@ -116,14 +112,8 @@ for k_curr=ceil(ahead_ptr/2):size(candidate_per_frame,2)-1
         end
     end
     
-    %Visualize the model fitted:
-%     for i=1:size(models_lst,2)
-%         hold on ;
-%         visualizeTracklet(models_lst(i),prev_ptr,ahead_ptr,1);
-%     end
-    
-    % For each model in the model_lst, optimize the model
-    optimized_models_lst = optimizeMotionModel(models_lst,candidate_per_frame,prev_ptr , ahead_ptr , m_th , d_th);
+    %% For each model in the model_lst, optimize the model
+    optimized_models_lst = optimizeMotionModel(models_lst,candidate_per_frame,prev_ptr , ahead_ptr , m_th , d_th , mov(buffer_len+1).cdata , vidOutObjTracklet , buffer_len , 0);
     total_models = total_models + size(optimized_models_lst,2);
     model_set = [model_set optimized_models_lst];
     %convert the optimized models into nodes:
@@ -133,57 +123,46 @@ for k_curr=ceil(ahead_ptr/2):size(candidate_per_frame,2)-1
     end
     
     %tracklets_arr{count} = optimized_models_lst;
-    % After the optimization:
-    
-    %plot all the candidates of the window:
-    curr_image = mov(k_curr).cdata;
-    for i=1:size(coords,1)
-        curr_image = insertShape(curr_image, 'circle' ,[coords(i,1) , coords(i,2) , 1] );
-    end
+    %% After the optimization:
 
-    disp(tracklet_count); %display
-    %imshow(curr_image);
-    allMs = {};
-    count = 1;
-    for i=1:size(optimized_models_lst,2)
-        %hold on ;
-        %visualizeTracklet(optimized_models_lst(i),prev_ptr,ahead_ptr,1);
-        M = drawTracklet(optimized_models_lst(i),prev_ptr,ahead_ptr,1);
-        allMs{count} = M;
-        count = count + 1;
-        % show the tracklets on the image.
-        %plotTrackletOnImage(coords,mov(img_ptr_mov).cdata , models_lst(i) , prev_ptr , ahead_ptr , 0);
-    
+    disp(tracklet_count); 
+    %display
+    if writeFlag
+        %plot all the candidates of the window:
+        curr_image = mov(k_curr).cdata;
+        for i=1:size(coords,1)
+            curr_image = insertShape(curr_image, 'circle' ,[coords(i,1) , coords(i,2) , 1] );
+        end
+
+        %imshow(curr_image);
+        allMs = {};
+        count = 1;
+        for i=1:size(optimized_models_lst,2)
+            %hold on ;
+            %visualizeTracklet(optimized_models_lst(i),prev_ptr,ahead_ptr,1);
+            M = drawTracklet(optimized_models_lst(i),prev_ptr,ahead_ptr,1);
+            allMs{count} = M;
+            count = count + 1;
+            % show the tracklets on the image.
+            %plotTrackletOnImage(coords,mov(img_ptr_mov).cdata , models_lst(i) , prev_ptr , ahead_ptr , 0);
+            
+        end
+        if ~isempty(allMs)
+            curr_image = insertShape(curr_image,'Line',allMs,'LineWidth',2,'Color',{'red'});
+        end
+        writeVideo(vidOutObj,curr_image);
+        
     end
-    if ~isempty(allMs)
-        curr_image = insertShape(curr_image,'Line',allMs,'LineWidth',2,'Color',{'red'});
-    end
-%    imshow(curr_img);
-%    hold on;
-    writeVideo(vidOutObj,curr_image);
-    
     img_ptr_mov = img_ptr_mov + 1;
-    % visualization of the init seed pixels
-%     hold on;
-%     for i=1:size(models_lst,2)
-%        model = models_lst(i);
-%        scatter(model.p1.x , model.p1.y , 10 , '*');
-%        scatter(model.p2.x , model.p2.y , 10 , 'X');
-%        scatter(model.p3.x , model.p3.y , 10 , '+');
-%     end
     
     prev_ptr = prev_ptr + 1;
     ahead_ptr = ahead_ptr + 1;
-    %count = count + 1;
-%     if ~isempty(handle)
-%         delete(handle);
-%     end
 end
 
 close(vidOutObj);
+close(vidOutObjTracklet);
 %create the directed graph of tracklets.
 %graph = createGraphFromList(model_set);
 %use model set:
-
 
 end

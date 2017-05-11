@@ -1,7 +1,7 @@
 function [flag , tform] = matchDescriptors(templateFatures, templateDescriptor, frameFeatures, frameDescriptors , frame_image , tem_in)
 [matches, scores] = vl_ubcmatch(templateDescriptor, frameDescriptors, 3);
 flag = 1;
-disp(size(matches,2));
+%disp(size(matches,2));
 if size(matches,2) <= 4 %Changes from == 0 to <= 8, from matching frames in australian open, ~60 matchess
     flag = 0;
     tform=[];
